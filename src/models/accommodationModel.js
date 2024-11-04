@@ -26,6 +26,9 @@ const Accommodation = sequelize.define('Accommodation', {
         },
         allowNull: true,
     },
+    image_url:{
+        type: DataTypes.STRING,
+    }
 }, {
     tableName: 'accommodations',
     timestamps: false,
