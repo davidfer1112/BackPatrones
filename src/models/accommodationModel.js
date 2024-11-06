@@ -26,9 +26,13 @@ const Accommodation = sequelize.define('Accommodation', {
         },
         allowNull: true,
     },
-    image_url:{
+    image_url: {
         type: DataTypes.STRING,
-    }
+    },
+    price: {  
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: true,
+    },
 }, {
     tableName: 'accommodations',
     timestamps: false,

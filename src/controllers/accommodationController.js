@@ -3,8 +3,8 @@ const Accommodation = require('../models/accommodationModel');
 const accommodationController = {
     createAccommodation: async (req, res) => {
         try {
-            const { name, location, contact, event_id, image_url } = req.body;
-            const accommodation = await Accommodation.create({ name, location, contact, event_id, image_url });
+            const { name, location, contact, event_id, image_url, price } = req.body;
+            const accommodation = await Accommodation.create({ name, location, contact, event_id, image_url, price });
             res.status(201).json({ message: 'Accommodation created successfully', accommodation });
         } catch (error) {
             res.status(500).json({ message: 'Error creating accommodation', error: error.message });

@@ -21,10 +21,13 @@ const Event = sequelize.define('Event', {
     location: {
         type: DataTypes.STRING,
     },
-    image_url:{
+    image_url: {
         type: DataTypes.STRING,
-    }
-
+    },
+    price: {  
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: true,
+    },
 }, {
     tableName: 'events',
     timestamps: false,
