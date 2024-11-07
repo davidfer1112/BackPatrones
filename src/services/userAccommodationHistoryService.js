@@ -9,8 +9,12 @@ const userAccommodationHistoryService = {
         return await UserAccommodationHistory.findAll({ where: { user_id: userId } });
     },
 
-    updateHistoryStatus: async (historyId, status) => {
-        return await UserAccommodationHistory.update({ status }, { where: { history_id: historyId } });
+    updateHistory: async (historyId, data) => {
+        const history = await UserAccommodationHistory.findByPk(historyId);
+        if (!history) throw new Error('History not found');
+
+        await history.update(data);
+        return history;
     },
 };
 

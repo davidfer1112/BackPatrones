@@ -9,8 +9,12 @@ const userEventHistoryService = {
         return await UserEventHistory.findAll({ where: { user_id: userId } });
     },
 
-    updateHistoryStatus: async (historyId, status) => {
-        return await UserEventHistory.update({ status }, { where: { history_id: historyId } });
+    updateHistory: async (historyId, data) => {
+        const history = await UserEventHistory.findByPk(historyId);
+        if (!history) throw new Error('History not found');
+
+        await history.update(data);
+        return history;
     },
 };
 

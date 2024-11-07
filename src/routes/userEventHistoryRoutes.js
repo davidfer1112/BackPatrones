@@ -4,5 +4,6 @@ const userEventHistoryController = require('../controllers/userEventHistoryContr
 
 router.post('/', userEventHistoryController.createHistory);
 router.get('/:userId', userEventHistoryController.getHistoryByUserId);
+router.put('/:historyId', userEventHistoryController.updateHistory); // Ruta para actualizar el historial
 
 module.exports = router;

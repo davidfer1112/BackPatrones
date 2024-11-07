@@ -20,6 +20,17 @@ const userAccommodationHistoryController = {
             res.status(500).json({ message: 'Error fetching accommodation history', error: error.message });
         }
     },
+
+    updateHistory: async (req, res) => {
+        try {
+            const { historyId } = req.params;
+            const { status } = req.body;
+            const updatedHistory = await userAccommodationHistoryService.updateHistory(historyId, { status });
+            res.json({ message: 'History updated successfully', updatedHistory });
+        } catch (error) {
+            res.status(500).json({ message: 'Error updating accommodation history', error: error.message });
+        }
+    },
 };
 
 module.exports = userAccommodationHistoryController;
