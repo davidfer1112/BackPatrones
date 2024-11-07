@@ -21,8 +21,11 @@ const authService = {
         const isMatch = await bcrypt.compare(password, user.password_hash);
         if (!isMatch) throw new Error('Incorrect password');
 
+        // Generar token con el userId y el role
         const token = jwt.sign({ userId: user.user_id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        return { user, token };
+
+        // Retornar userId, role, y token
+        return { userId: user.user_id, role: user.role, token };
     },
 };
 
