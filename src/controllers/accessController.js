@@ -12,33 +12,59 @@ const accessController = {
 
             // Obtenemos los datos del usuario para enviar el correo
             const user = await User.findByPk(user_id);
-            if (!user) return res.status(404).json({ message: 'User not found' });
+            if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
 
             // Configuración del mensaje según el tipo de acceso
             let subject, text;
+            const logoUrl = 'https://firebasestorage.googleapis.com/v0/b/miportal-c92f1.appspot.com/o/logo.png?alt=media&token=dfa80215-1eab-4f56-a81f-45d78a01f3f2';
+
             if (type === 'event') {
                 const event = await Event.findByPk(event_id);
-                if (!event) return res.status(404).json({ message: 'Event not found' });
+                if (!event) return res.status(404).json({ message: 'Evento no encontrado' });
 
-                subject = `Access Granted to Event: ${event.name}`;
-                text = `Hello ${user.name},\n\nYour access to the event "${event.name}" has been confirmed. You may now enter the event. Location: ${event.location}.\n\nBest regards,\nUnlock Team`;
+                subject = `Acceso Confirmado al Evento: ${event.name}`;
+                text = `
+                    Hola ${user.name},
+
+                    Nos complace informarte que tu acceso al evento "${event.name}" ha sido confirmado.
+                    
+                    Ubicación: ${event.location}
+
+                    Te esperamos con los brazos abiertos.
+
+                    Saludos cordiales,
+                    Equipo Unlock
+                    Logo: ${logoUrl}
+                `;
             } else if (type === 'accommodation') {
                 const accommodation = await Accommodation.findByPk(accommodation_id);
-                if (!accommodation) return res.status(404).json({ message: 'Accommodation not found' });
+                if (!accommodation) return res.status(404).json({ message: 'Alojamiento no encontrado' });
 
-                subject = `Access Granted to Accommodation: ${accommodation.name}`;
-                text = `Hello ${user.name},\n\nYour access to the accommodation "${accommodation.name}" has been confirmed. Location: ${accommodation.location}.\n\nBest regards,\nUnlock Team`;
+                subject = `Acceso Confirmado al Alojamiento: ${accommodation.name}`;
+                text = `
+                    Hola ${user.name},
+
+                    Nos complace informarte que tu acceso al alojamiento "${accommodation.name}" ha sido confirmado.
+                    
+                    Ubicación: ${accommodation.location}
+
+                    Que tengas una excelente estadía.
+
+                    Saludos cordiales,
+                    Equipo Unlock
+                    
+                `;
             } else {
-                return res.status(400).json({ message: 'Invalid access type' });
+                return res.status(400).json({ message: 'Tipo de acceso no válido' });
             }
 
-            // Enviamos el correo
+            // Enviamos el correo en texto plano
             await sendEmail(user.email, subject, text);
 
-            res.status(201).json({ message: 'Access logged successfully and email sent', accessLog });
+            res.status(201).json({ message: 'Acceso registrado y correo enviado correctamente', accessLog });
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: 'Error logging access and sending email', error: error.message });
+            res.status(500).json({ message: 'Error al registrar el acceso y enviar el correo', error: error.message });
         }
     },
 
@@ -47,7 +73,7 @@ const accessController = {
             const logs = await AccessLog.findAll();
             res.json(logs);
         } catch (error) {
-            res.status(500).json({ message: 'Error fetching access logs', error: error.message });
+            res.status(500).json({ message: 'Error al obtener los registros de acceso', error: error.message });
         }
     },
 };
