@@ -20,6 +20,16 @@ const userAccommodationHistoryController = {
         }
     },
 
+    getHistoryByUserId: async (req, res) => {
+        try {
+            const { userId } = req.params;
+            const history = await userAccommodationHistoryService.getHistoryByUserId(userId);
+            res.status(200).json(history);
+        } catch (error) {
+            res.status(500).json({ message: 'Error fetching accommodation history', error: error.message });
+        }
+    },
+
     updateHistory: async (req, res) => {
         try {
             const { historyId } = req.params;
