@@ -36,15 +36,18 @@ const userAccommodationHistoryController = {
             const { status } = req.body;
             const updatedHistory = await userAccommodationHistoryService.updateHistory(historyId, { status });
 
+            console.log('Creating activity for history update...');
             // Registrar actividad de actualización
-            await accommodationActivityHistoryService.createActivity({
+            const activity = await accommodationActivityHistoryService.createActivity({
                 user_id: updatedHistory.user_id,
                 accommodation_id: updatedHistory.accommodation_id,
                 action: `Status updated to: ${status}`,
             });
+            console.log('Activity created:', activity);
 
             res.json({ message: 'History updated successfully', updatedHistory });
         } catch (error) {
+            console.error('Error in updateHistory:', error.message); // Depuración
             res.status(500).json({ message: 'Error updating accommodation history', error: error.message });
         }
     },

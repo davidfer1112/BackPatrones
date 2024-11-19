@@ -2,7 +2,12 @@ const AccommodationActivityHistory = require('../models/accommodationActivityHis
 
 const accommodationActivityHistoryService = {
     createActivity: async (data) => {
-        return await AccommodationActivityHistory.create(data);
+        try {
+            return await AccommodationActivityHistory.create(data);
+        } catch (error) {
+            console.error('Error creating activity:', error.message); // Para depuración
+            throw error;
+        }
     },
 };
 
