@@ -10,6 +10,7 @@ const userAccommodationHistoryRoutes = require('./routes/userAccommodationHistor
 const authMiddleware = require('./middlewares/authMiddleware');
 const errorHandler = require('./middlewares/errorHandler');
 const accommodationActivityRoutes = require('./routes/accommodationActivityHistoryRoutes');
+const eventActivityHistoryRoutes = require('./routes/eventActivityHistoryRoutes');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use('/api/access', authMiddleware, accessRoutes);
 app.use('/api/user-event-history', authMiddleware, userEventHistoryRoutes);
 app.use('/api/user-accommodation-history', authMiddleware, userAccommodationHistoryRoutes); // Agrega la ruta del historial de alojamiento
 app.use('/api/accommodation-activity-history', authMiddleware, accommodationActivityRoutes);
+app.use('/api/event-activity-history', eventActivityHistoryRoutes);
 
 app.use(errorHandler);
 
